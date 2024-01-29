@@ -25,7 +25,7 @@ defmodule LiveViewBabyWeb.SelectRoom do
     <div class="flex flex-col gap-4">
       <h2 class="bold">Welcome to the chat room hub</h2>
       <form class="flex flex-col gap-4" phx-submit="create_room">
-        <input class="rounded" type="text" name="room_id" placeholder="Enter new room id" />
+        <input class="rounded" required type="text" name="room_id" placeholder="Enter new room id" />
         <button class="phx-submit-loading:bg-green-400 btn btn-secondary" type="submit">Create room</button>
       </form>
       <%!-- create a link button for each room id --%>
