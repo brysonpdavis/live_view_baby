@@ -43,10 +43,10 @@ defmodule LiveViewBabyWeb.LiveTest do
       </div>
       <p class="text-xl font-bold text-center"><%= @display_text %></p>
       <form class="flex flex-col gap-4" phx-submit="update_text">
-        <input class="rounded" type="text" name="new_text" placeholder="Enter new text" />
-        <button class="phx-submit-loading:disabled btn btn-primary" type="submit">Submit</button>
+        <input class="rounded" required type="text" name="new_text" placeholder="Enter new text" />
+        <button class="phx-submit-loading:btn-disabled btn btn-primary" type="submit">Submit</button>
       </form>
-      <button class="phx-click-loading:disabled btn btn-warning" phx-click="destroy_text">
+      <button class="phx-click-loading:btn-disabled btn btn-warning" phx-click="destroy_text">
         <span class="phx-click-loading:loading phx-click-loading:loading-spinner " />
         Clear text
       </button>
