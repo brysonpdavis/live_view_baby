@@ -20,6 +20,12 @@ defmodule LiveViewBaby.SharedText do
     GenServer.call(__MODULE__, {:get_rooms})
   end
 
+  def create_room(room_id) do
+    formatted_room_id = String.replace(room_id, " ", "-")
+
+    GenServer.cast(__MODULE__, {:create_room, formatted_room_id})
+  end
+
   # Function to set text for a specific room_id
   def set_text(room_id, new_text) do
     GenServer.cast(__MODULE__, {:set_text, room_id, new_text})
@@ -34,6 +40,7 @@ defmodule LiveViewBaby.SharedText do
         room_ids = Map.keys(new_state)
         Phoenix.PubSub.broadcast(LiveViewBaby.PubSub, "shared_text:update", {:room_ids, room_ids})
         {:reply, "Default text", new_state}
+
       text -> {:reply, text, state}
     end
   end
@@ -47,6 +54,13 @@ defmodule LiveViewBaby.SharedText do
   def handle_cast({:set_text, room_id, new_text}, state) do
     updated_state = Map.put(state, room_id, new_text)
     Phoenix.PubSub.broadcast(LiveViewBaby.PubSub, "shared_text:update:#{room_id}", {:shared_text, new_text})
+    {:noreply, updated_state}
+  end
+
+  @impl true
+  def handle_cast({:create_room, room_id}, state) do
+    updated_state = Map.put(state, room_id, nil)
+    Phoenix.PubSub.broadcast(LiveViewBaby.PubSub, "shared_text:update", {:room_ids, Map.keys(updated_state)})
     {:noreply, updated_state}
   end
 end

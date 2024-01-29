@@ -32,12 +32,22 @@ defmodule LiveViewBabyWeb.LiveTest do
   def render(assigns) do
     ~H"""
     <div class="flex flex-col gap-4 capitalize">
-      <p><%= @display_text %></p>
+    <div class="flex flex-row justify-between items-center">
+      <a href={~p[/live-test]} class="w-fit">
+        <button class="btn">
+          <span class="hero-arrow-left" />Back
+        </button>
+      </a>
+      <%!-- show the room id --%>
+      <div>Room: <span class="underline"><%= @room_id %></span></div>
+      </div>
+      <p class="text-xl font-bold text-center"><%= @display_text %></p>
       <form class="flex flex-col gap-4" phx-submit="update_text">
         <input class="rounded" type="text" name="new_text" placeholder="Enter new text" />
-        <button class="phx-submit-loading:bg-green-400" type="submit">Submit</button>
+        <button class="phx-submit-loading:disabled btn btn-primary" type="submit">Submit</button>
       </form>
-      <button class="phx-click-loading:bg-red-500" phx-click="destroy_text">
+      <button class="phx-click-loading:disabled btn btn-warning" phx-click="destroy_text">
+        <span class="phx-click-loading:loading phx-click-loading:loading-spinner " />
         Clear text
       </button>
     </div>
